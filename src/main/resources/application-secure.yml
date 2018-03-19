@@ -1,0 +1,12 @@
+clients:
+  global-weather:
+    url: "http://www.webservicex.com/globalweather.asmx"
+    ssl:
+      enabled: true
+      keystore: ~
+      keystore-password: ~
+      keystore-type: ~
+      key-alias: ~
+      key-password: ~
+      truststore: ~
+      truststore-password: ~
