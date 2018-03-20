@@ -46,9 +46,7 @@ public class GlobalWeatherClient {
 
         log.info("Sending GetCitiesByCountry request...");
 
-        String url = webServiceTemplate.getDefaultUri();
-
-        GetCitiesByCountryResponse response = (GetCitiesByCountryResponse) webServiceTemplate.marshalSendAndReceive(url, request, new SoapActionCallback("http://www.webserviceX.NET/GetCitiesByCountry"));
+        GetCitiesByCountryResponse response = (GetCitiesByCountryResponse) webServiceTemplate.marshalSendAndReceive(request, new SoapActionCallback("GetCitiesByCountry"));
 
         return response;
     }
