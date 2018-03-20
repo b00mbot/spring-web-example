@@ -1,12 +1,13 @@
 clients:
   global-weather:
-    url: "http://www.webservicex.com/globalweather.asmx"
+    url: ~
     ssl:
       enabled: true
       keystore: ~
       keystore-password: ~
-      keystore-type: ~
+      keystore-type: JKS
       key-alias: ~
       key-password: ~
       truststore: ~
       truststore-password: ~
+      verifyHostName: false

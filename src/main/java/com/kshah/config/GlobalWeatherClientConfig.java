@@ -1,10 +1,15 @@
 package com.kshah.config;
 
 import com.kshah.client.GlobalWeatherClient;
+import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -175,6 +180,7 @@ public class GlobalWeatherClientConfig {
         webServiceTemplate.setDefaultUri(url);
         webServiceTemplate.setMarshaller(marshaller());
         webServiceTemplate.setUnmarshaller(marshaller());
+        webServiceTemplate.setMessageSender(httpComponentsMessageSender());
         return webServiceTemplate;
     }
 
@@ -199,6 +205,9 @@ public class GlobalWeatherClientConfig {
         if (sslEnabled) {
             builder = builder.setSSLSocketFactory(sslConnectionSocketFactory());
         }
+
+        // Doing the following to fix the error complaining about Content-Length header already present
+        builder = builder.addInterceptorFirst((HttpRequestInterceptor) (httpRequest, httpContext) -> httpRequest.removeHeaders(HTTP.CONTENT_LEN));
 
         return builder.build();
     }
